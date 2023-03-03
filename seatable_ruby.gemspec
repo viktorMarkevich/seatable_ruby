@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require_relative "lib/seatable/rails/version"
+require_relative "lib/seatable_ruby/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "seatable-rails"
-  spec.version = Seatable::Rails::VERSION
+  spec.name = "seatable_ruby"
+  spec.version = SeatableRuby::VERSION
   spec.authors = ["victorMarkevich"]
   spec.email = ["viktor.markevich@faceit.com.ua"]
 
   spec.summary = "SeaTable client."
   spec.description = "This gem will help you interact with the SeaTable API."
-  spec.homepage = "https://github.com/viktorMarkevich/seatable-rails"
+  spec.homepage = "https://github.com/viktorMarkevich/seatable_ruby"
   spec.required_ruby_version = ">= 2.4.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/viktorMarkevich/seatable-rails"
-  spec.metadata["changelog_uri"] = "https://github.com/viktorMarkevich/seatable-rails"
+  spec.metadata["source_code_uri"] = "https://github.com/viktorMarkevich/seatable_ruby"
+  spec.metadata["changelog_uri"] = "https://github.com/viktorMarkevich/seatable_ruby"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

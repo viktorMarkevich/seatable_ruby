@@ -3,13 +3,11 @@ require "net/http"
 
 module SeatableRuby
   class Client
-    attr_reader :api_token, :table_name
-    attr_accessor :access_token, :table_uuid
+    attr_reader :api_token
 
-    def initialize(api_token)
-      @api_token = api_token
+    def initialize
+      @api_token = SeatableRuby.api_token
     end
-
 
     def access_data
       url = URI("https://cloud.seatable.io/api/v2.1/dtable/app-access-token/")
@@ -22,7 +20,9 @@ module SeatableRuby
       request["Authorization"] = "Token #{api_token}"
 
       response = https.request(request)
-      parse(response.read_body)
+      data = parse(response.read_body)
+      p data
+      data
 
       # {
       #   "app_name": "KoPAC",

@@ -20,7 +20,7 @@ module SeatableRuby
     # end
 
     def get_table_rows(table_name = 'Terminierungsliste')
-      token_data = Client.access_data
+      token_data = Client.new.access_data
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{token_data['dtable_uuid']}/rows/?table_name=#{table_name}")
 
       https = Net::HTTP.new(url.host, url.port)

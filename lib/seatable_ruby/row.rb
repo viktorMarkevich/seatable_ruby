@@ -3,35 +3,24 @@ require "net/http"
 
 module SeatableRuby
   class Row
-    # attr_accessor :base_token, :table_name
-    # attr_writer :api_token
+    attr_accessor :options, :access_data
 
-    def initialize
-      # @api_token = api_token
-      # @access_token
+    def initialize(options = {})
+      @access_data = Client.new.access_data
+      @options = options.merge(@access_data)
     end
 
-    # def access_token
-    #   @access_token ||= access_data['access_token']
-    # end
-    #
-    # def table_uuid
-    #   @table_uuid ||= access_data['dtable_uuid']
-    # end
-
-    def get_table_rows(table_name = 'Terminierungsliste')
-      token_data = Client.new.access_data
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{token_data['dtable_uuid']}/rows/?table_name=#{table_name}")
+    def get_table_rows
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/rows/?table_name=#{options[:table_name]}")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
 
       request = Net::HTTP::Get.new(url)
-      request["Authorization"] = "Token #{token_data['access_token']}"
+      request["Authorization"] = "Token #{access_data['access_token']}"
       response = https.request(request)
-      data = JSON.parse(response.read_body)
-      p data
-      data
+      SeatableRuby.parse(response.read_body)
+      # the response example here https://api.seatable.io/#528ae603-6dcc-4dc3-846f-a38974a4795d
     end
   end
 end

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    seatable_ruby (0.2.2)
+    seatable_ruby (0.1.0)
 
 GEM
   remote: https://rubygems.org/

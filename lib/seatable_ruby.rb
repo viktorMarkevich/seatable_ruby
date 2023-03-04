@@ -13,5 +13,11 @@ module SeatableRuby
     def config
       yield self
     end
+
+    def parse(body)
+      JSON.parse(body)
+    rescue JSON::ParserError
+      nil
+    end
   end
 end

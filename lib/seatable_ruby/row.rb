@@ -113,7 +113,60 @@ module SeatableRuby
       request.body = JSON.dump(row_data)
 
       response = https.request(request)
-      response.read_body
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # POST
+    # Batch Append Rows
+    def batch_append_rows(batch_rows_data)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/batch-append-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Post.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+      request["Content-Type"] = "application/json"
+      request.body = JSON.dump(batch_rows_data)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # PUT
+    # Update Row
+    def update_row(row_data)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Put.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+      request["Accept"] = "application/json"
+      request["Content-type"] = "application/json"
+      request.body = JSON.dump(row_data)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # PUT
+    # Batch Update Rows
+    def batch_update_rows(rows_data)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/batch-update-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Put.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+      request["Accept"] = "application/json"
+      request["Content-Type"] = "application/json"
+      request.body = JSON.dump(rows_data)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
     end
   end
 end

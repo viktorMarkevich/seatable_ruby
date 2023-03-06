@@ -168,5 +168,41 @@ module SeatableRuby
       response = https.request(request)
       SeatableRuby.parse(response.read_body)
     end
+
+    # DELETE
+    # Delete Row
+    def delete_row(row_data)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Delete.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+      request["Accept"] = "application/json"
+      request["Content-type"] = "application/json"
+      request.body = JSON.dump(row_data)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # DELETE
+    # Batch Delete Rows
+    def batch_delete_rows(rows_data)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/batch-delete-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Delete.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+      request["Accept"] = "application/json"
+      request["Content-type"] = "application/json"
+      request.body = JSON.dump(rows_data)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
   end
 end

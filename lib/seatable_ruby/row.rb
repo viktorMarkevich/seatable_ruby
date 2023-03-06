@@ -204,5 +204,54 @@ module SeatableRuby
       response = https.request(request)
       SeatableRuby.parse(response.read_body)
     end
+
+    # GET
+    # List Deleted Rows
+    def list_deleted_rows
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/deleted-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Get.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # PUT
+    # Lock Rows
+    def lock_rows(rows_data)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/lock-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Put.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+      request["Content-Type"] = "application/json"
+      request.body = JSON.dump(rows_data)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # PUT
+    # Unlock Rows
+    def unlock_rows(rows_data)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/unlock-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Put.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+      request["Content-Type"] = "application/json"
+      request.body = JSON.dump(rows_data)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
   end
 end

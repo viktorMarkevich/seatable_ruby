@@ -20,6 +20,7 @@ module SeatableRuby
 
       request = Net::HTTP::Get.new(url)
       request["Authorization"] = "Token #{access_data['access_token']}"
+
       response = https.request(request)
       SeatableRuby.parse(response.read_body)
       # ALLOWED_PARAMS => [:table_name, :view_name, :convert_link_id, :order_by, :direction, :start, :limit]
@@ -56,7 +57,23 @@ module SeatableRuby
       request.body = query
 
       response = https.request(request)
-      response.read_body
+      SeatableRuby.parse(response.read_body)
+    end
+
+    def row_details
+      # url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/650d8a0d-7e27-46a8-8b18-6cc6f3dbvh46/rows/Qtf7xPmoRaiFyQPO1aENTjb/?table_id=0000&convert=true")
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/rows/#{params['row_id']}/")
+      url.query = URI.encode_www_form(params.except('row_id'))
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Get.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+
+      response = https.request(request)
+
+      SeatableRuby.parse(response.read_body)
     end
   end
 end

@@ -22,11 +22,11 @@ module SeatableRuby
       request["Authorization"] = "Token #{access_data['access_token']}"
       response = https.request(request)
       SeatableRuby.parse(response.read_body)
-      # ALLOWED_PARAMS => [:table_name, :view_name, :convert_link_id, :order_by, :direction, :start, :limit
+      # ALLOWED_PARAMS => [:table_name, :view_name, :convert_link_id, :order_by, :direction, :start, :limit]
       # the response example here https://api.seatable.io/#528ae603-6dcc-4dc3-846f-a38974a4795d
     end
 
-    def query_with_sql(query)
+    def query_with_sql(query = {})
       url = URI("https://cloud.seatable.io/dtable-db/api/v1/query/#{access_data['dtable_uuid']}/")
 
       https = Net::HTTP.new(url.host, url.port)
@@ -41,6 +41,22 @@ module SeatableRuby
 
       response = https.request(request)
       SeatableRuby.parse(response.read_body)
+    end
+
+    def query_row_link_list(query = {})
+      # example of query body
+      # https://api.seatable.io/#186e5166-6d9e-4aef-890e-a1dd8a8b2ee0
+      url = URI("https://cloud.seatable.io/dtable-db/api/v1/linked-records/#{access_data['dtable_uuid']}")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Post.new(url)
+      request["Authorization"] = "Token #{access_data['access_token']}"
+      request.body = query
+
+      response = https.request(request)
+      response.read_body
     end
   end
 end

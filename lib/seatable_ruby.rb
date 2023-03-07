@@ -3,6 +3,8 @@
 require_relative "seatable_ruby/version"
 require_relative "seatable_ruby/client"
 require_relative "seatable_ruby/row"
+require_relative "seatable_ruby/basic_info"
+require_relative "seatable_ruby/column"
 
 module SeatableRuby
   class Error < StandardError; end

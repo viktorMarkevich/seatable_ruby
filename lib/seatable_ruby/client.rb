@@ -13,22 +13,27 @@ module SeatableRuby
     end
 
     def access_data
+      p @access_data
+      p '1' * 100
       @access_data ||= access_object
     end
 
-    def access_object
-      url = URI("https://cloud.seatable.io/api/v2.1/dtable/app-access-token/")
+    private
 
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
+      def access_object
+        puts '2' * 100
+        url = URI("https://cloud.seatable.io/api/v2.1/dtable/app-access-token/")
 
-      request = Net::HTTP::Get.new(url)
-      request["Accept"] = "application/json; charset=utf-8; indent=4"
-      request["Authorization"] = "Token #{api_token}"
+        https = Net::HTTP.new(url.host, url.port)
+        https.use_ssl = true
 
-      response = https.request(request)
-      SeatableRuby.parse(response.read_body)
-      # the response example here https://api.seatable.io/#579cf971-7bf4-4901-b21e-421e69ca2e52
-    end
+        request = Net::HTTP::Get.new(url)
+        request["Accept"] = "application/json; charset=utf-8; indent=4"
+        request["Authorization"] = "Token #{api_token}"
+
+        response = https.request(request)
+        SeatableRuby.parse(response.read_body)
+        # the response example here https://api.seatable.io/#579cf971-7bf4-4901-b21e-421e69ca2e52
+      end
   end
 end

@@ -5,6 +5,10 @@ module SeatableRuby
   class BasicInfo
     attr_accessor :access_data
 
+    # API calling rate	API calling for a single base	300/min for the cloud edition. 5000/day.
+    # This limit can be set by yourself for the Developer / Enterprise Edition.
+    # You should use batch APIs to reduce API calls.
+
     def initialize
       @access_data = Client.new.access_data
     end

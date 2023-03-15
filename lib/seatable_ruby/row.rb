@@ -3,27 +3,51 @@ require "net/http"
 
 module SeatableRuby
   class Row
-    attr_accessor :params, :access_data
+    # attr_accessor :params, :access_data, :limiter
+    attr_accessor :access_data, :limiter, :params
 
     def initialize(params = {})
-      @access_data = Client.new.access_data
+      @access_data ||= Client.new.access_data
       @params = params
+      @limiter ||= RequestsLimiter.new
     end
+
+    # DEFAULT_ROW_LIMITER = { '1' => 5, '60' => 100, '3600' => 600 }.freeze # https://manual.seatable.io/limitations/system_limitations/
+    DEFAULT_ROW_LIMITER = { '30' => 5, '60' => 10 }.freeze # https://manual.seatable.io/limitations/system_limitations/
+                                    # 100/min for a single table, 600/hour maximum
+
 
     # GET
     # List Rows
+    # Max. numbers of rows listed in a single call	10,000	Use the start and limit params to list further rows.
     def list_rows
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/rows")
-      url.query = URI.encode_www_form(params)
+      end_point = "https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/rows"
 
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
+      result = limiter.run(end_point + "/?table_name=#{params[:table_name]}", DEFAULT_ROW_LIMITER)
+      # p '@'
+      # p result
+      # p '@'
+      if result.blank?
+        url = URI(end_point)
+        url.query = URI.encode_www_form(params)
 
-      request = Net::HTTP::Get.new(url)
-      request["Authorization"] = "Token #{access_data['access_token']}"
+        https = Net::HTTP.new(url.host, url.port)
+        https.use_ssl = true
 
-      response = https.request(request)
-      SeatableRuby.parse(response.read_body)
+        request = Net::HTTP::Get.new(url)
+        request["Authorization"] = "Token #{access_data['access_token']}"
+
+        response = https.request(request)
+        # p response.code
+        # p response.message
+        # p '1'*100
+        SeatableRuby.parse(response.read_body)
+      else
+        tt = { code: 429, message: 'Too many requests fired. Request quota exceeded!' }
+        # p tt
+        # p '2'*100
+        tt
+      end
       # ALLOWED_PARAMS => [:table_name, :view_name, :convert_link_id, :order_by, :direction, :start, :limit]
       # the response example here https://api.seatable.io/#528ae603-6dcc-4dc3-846f-a38974a4795d
     end
@@ -252,6 +276,12 @@ module SeatableRuby
 
       response = https.request(request)
       SeatableRuby.parse(response.read_body)
+    end
+
+    private
+
+    def simple_get_query
+
     end
   end
 end

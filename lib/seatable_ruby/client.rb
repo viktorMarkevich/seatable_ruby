@@ -13,15 +13,14 @@ module SeatableRuby
     end
 
     def access_data
-      p @access_data
-      p '1' * 100
-      @access_data ||= access_object
+      @@access_data ||= access_object
+      # p @@access_data
+      # p '-' * 10
     end
 
     private
 
       def access_object
-        puts '2' * 100
         url = URI("https://cloud.seatable.io/api/v2.1/dtable/app-access-token/")
 
         https = Net::HTTP.new(url.host, url.port)

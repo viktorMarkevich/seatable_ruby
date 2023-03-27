@@ -16,7 +16,16 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here
+- create a file with any name (whatever you like) in the `initializers` folder.
+- add the following lines to this file:
+    ```
+    require 'seatable_ruby'
+
+    SeatableRuby.config do |c|
+        c.api_token = ENV['SEATABLE_API_TOKEN']
+    end    
+    ```
+__NOTICE:__ Put your api_token into `ENV['SEATABLE_API_TOKEN']`. You can do it by using the [dotenv-rails gem](https://github.com/bkeepers/dotenv) **OR** use `master.key` and `credentials.yml.enc` if you rails version is `5.0 +`.
 
 ## Development
 

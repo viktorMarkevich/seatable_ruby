@@ -3,14 +3,20 @@ require "net/http"
 
 module SeatableRuby
   class BasicInfo
-    attr_accessor :access_data
+    attr_accessor :dtable_uuid, :access_token
 
     def initialize
-      @access_data = Client.new.access_data
+      @dtable_uuid = client.dtable_uuid
+      @access_token = client.access_token
     end
 
+    def client
+      @client ||= Client.new
+    end
+    
+
     def basic_infos
-      url = URI("https://cloud.seatable.io/dtable-server/dtables/#{access_data['dtable_uuid']}")
+      url = URI("https://cloud.seatable.io/dtable-server/dtables/#{dtable_uuid}")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -21,7 +27,7 @@ module SeatableRuby
     end
 
     def basic_metadata
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/metadata/")
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/metadata/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -33,7 +39,7 @@ module SeatableRuby
     end
 
     def basic_big_data_status
-      url = URI("https://cloud.seatable.io/dtable-db/api/v1/base-info/#{access_data['dtable_uuid']}/")
+      url = URI("https://cloud.seatable.io/dtable-db/api/v1/base-info/#{dtable_uuid}/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -46,12 +52,10 @@ module SeatableRuby
     private
 
     def return_response(https, request)
-      request["Authorization"] = "Token #{access_data['access_token']}"
+      request["Authorization"] = "Token #{access_token}"
 
       response = https.request(request)
-      data = SeatableRuby.parse(response.read_body)
-      p data
-      data
+      SeatableRuby.parse(response.read_body)
     end
   end
 end

@@ -3,17 +3,22 @@ require "net/http"
 
 module SeatableRuby
   class View
-    attr_accessor :params, :access_data
+    attr_accessor :params, :dtable_uuid, :access_token
 
     def initialize(params = {})
-      @access_data = Client.new.access_data
+      @dtable_uuid = client.dtable_uuid
+      @access_token = client.access_token
       @params = params
+    end
+
+    def client
+      @client ||= Client.new
     end
 
     # GET
     # List Rows
     def list_views
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{access_data['dtable_uuid']}/views/")
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/")
 
       url.query = URI.encode_www_form(params)
       http = Net::HTTP.new(url.host, url.port)
@@ -21,6 +26,7 @@ module SeatableRuby
 
       request = Net::HTTP::Get.new(url)
       request["accept"] = 'application/json'
+      request["Authorization"] = "Token #{access_token}"
 
       response = http.request(request)
       SeatableRuby.parse(response.read_body)

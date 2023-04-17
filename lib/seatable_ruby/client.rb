@@ -4,12 +4,12 @@ require "net/http"
 module SeatableRuby
   class Client
     attr_reader :api_token
-    attr_accessor :access_token, :table_uuid, :access_data
+    attr_accessor :access_token, :dtable_uuid
 
     def initialize
       @api_token = SeatableRuby.api_token
       @access_token ||= access_data['access_token']
-      @table_uuid ||= access_data['dtable_uuid']
+      @dtable_uuid ||= access_data['dtable_uuid']
     end
 
     def access_data

@@ -6,13 +6,10 @@ module SeatableRuby
     attr_accessor :params, :dtable_uuid, :access_token
 
     def initialize(params = {})
+      client = Client.new
       @dtable_uuid = client.dtable_uuid
       @access_token = client.access_token
       @params = params
-    end
-
-    def client
-      @client ||= Client.new
     end
 
     # GET

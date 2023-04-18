@@ -36,6 +36,9 @@ module SeatableRuby
     # required query_params is -> { table_name: '...' }
     # all query_params => { table_name: '...', view_name: '...', convert_link_id: '...', order_by: '...', direction: '...', start: '...', limit: '...' }
     # for more info -> https://api.seatable.io/reference/list-rows
+    #
+    # NOTE: The response returns only up to 1.000 rows, even if limit is set to more than 1.000.
+    # This request can not return rows from the big data backend. User the request List Rows (with SQL) instead.
 
     def list_rows(query_params)
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows")
@@ -157,7 +160,7 @@ module SeatableRuby
     # POST
     # Append Rows
     # required body_params are -> { table_name: '..', rows: [...]  }
-    # https://api.seatable.io/reference/append-rows
+    # for more info -> https://api.seatable.io/reference/append-rows
 
     def append_rows(body_params)
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-append-rows/")
@@ -174,107 +177,89 @@ module SeatableRuby
       SeatableRuby.parse(response.read_body)
     end
 
-    # # POST
-    # # Query Row Link List
-    # def query_row_link_list(query = {})
-    #   # example of query body
-    #   # https://api.seatable.io/#186e5166-6d9e-4aef-890e-a1dd8a8b2ee0
-    #   url = URI("https://cloud.seatable.io/dtable-db/api/v1/linked-records/#{dtable_uuid}")
+    # PUT
+    # Update Rows
+    # required body_params are -> { table_name: '...', updates: [ row_id: '...', row: { "Name":"Max", "Age":"21" } ] }
+    # for more info -> https://api.seatable.io/reference/update-rows
+
+    def update_rows(body_params)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-update-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Put.new(url)
+      request["Authorization"] = "Token #{access_token}"
+      request["Accept"] = "application/json"
+      request["Content-Type"] = "application/json"
+      request.body = JSON.dump(body_params)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # DELETE
+    # Delete Rows
+    # required body_params are -> { table_name: '...', row_ids: ['..', '..'] }
+    # for more info -> https://api.seatable.io/reference/delete-rows
+
+    def delete_rows(body_params)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-delete-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Delete.new(url)
+      request["Authorization"] = "Token #{access_token}"
+      request["Accept"] = "application/json"
+      request["Content-type"] = "application/json"
+      request.body = JSON.dump(body_params)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # PUT
+    # Lock Rows
+    # required body_params are -> { table_name: '...', row_ids: [ '..', '..' ] }
     #
-    #   https = Net::HTTP.new(url.host, url.port)
-    #   https.use_ssl = true
+    # NOTE: Lock rows is an advanced feature in SeaTable and only available for enterprise subscriptions.
+    # for more info -> https://api.seatable.io/reference/lock-rows
+
+    def lock_rows(body_params)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/lock-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Put.new(url)
+      request["Authorization"] = "Token #{access_token}"
+      request["Content-Type"] = "application/json"
+      request.body = JSON.dump(body_params)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
+
+    # PUT
+    # Unlock Rows
+    # required body_params are -> { table_name: '...', row_ids: [ '..', '..' ] }
     #
-    #   request = Net::HTTP::Post.new(url)
-    #   request["Authorization"] = "Token #{access_token}"
-    #   request.body = query
-    #
-    #   response = https.request(request)
-    #   SeatableRuby.parse(response.read_body)
-    # end
-    #
-    # # PUT
-    # # Batch Update Rows
-    # def batch_update_rows(rows_data)
-    #   url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-update-rows/")
-    #
-    #   https = Net::HTTP.new(url.host, url.port)
-    #   https.use_ssl = true
-    #
-    #   request = Net::HTTP::Put.new(url)
-    #   request["Authorization"] = "Token #{access_token}"
-    #   request["Accept"] = "application/json"
-    #   request["Content-Type"] = "application/json"
-    #   request.body = JSON.dump(rows_data)
-    #
-    #   response = https.request(request)
-    #   SeatableRuby.parse(response.read_body)
-    # end
-    #
-    # # DELETE
-    # # Batch Delete Rows
-    # def batch_delete_rows(rows_data)
-    #   url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-delete-rows/")
-    #
-    #   https = Net::HTTP.new(url.host, url.port)
-    #   https.use_ssl = true
-    #
-    #   request = Net::HTTP::Delete.new(url)
-    #   request["Authorization"] = "Token #{access_token}"
-    #   request["Accept"] = "application/json"
-    #   request["Content-type"] = "application/json"
-    #   request.body = JSON.dump(rows_data)
-    #
-    #   response = https.request(request)
-    #   SeatableRuby.parse(response.read_body)
-    # end
-    #
-    # # GET
-    # # List Deleted Rows
-    # def list_deleted_rows
-    #   url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/deleted-rows/")
-    #
-    #   https = Net::HTTP.new(url.host, url.port)
-    #   https.use_ssl = true
-    #
-    #   request = Net::HTTP::Get.new(url)
-    #   request["Authorization"] = "Token #{access_token}"
-    #
-    #   response = https.request(request)
-    #   SeatableRuby.parse(response.read_body)
-    # end
-    #
-    # # PUT
-    # # Lock Rows
-    # def lock_rows(rows_data)
-    #   url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/lock-rows/")
-    #
-    #   https = Net::HTTP.new(url.host, url.port)
-    #   https.use_ssl = true
-    #
-    #   request = Net::HTTP::Put.new(url)
-    #   request["Authorization"] = "Token #{access_token}"
-    #   request["Content-Type"] = "application/json"
-    #   request.body = JSON.dump(rows_data)
-    #
-    #   response = https.request(request)
-    #   SeatableRuby.parse(response.read_body)
-    # end
-    #
-    # # PUT
-    # # Unlock Rows
-    # def unlock_rows(rows_data)
-    #   url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/unlock-rows/")
-    #
-    #   https = Net::HTTP.new(url.host, url.port)
-    #   https.use_ssl = true
-    #
-    #   request = Net::HTTP::Put.new(url)
-    #   request["Authorization"] = "Token #{access_token}"
-    #   request["Content-Type"] = "application/json"
-    #   request.body = JSON.dump(rows_data)
-    #
-    #   response = https.request(request)
-    #   SeatableRuby.parse(response.read_body)
-    # end
+    # for more info -> https://api.seatable.io/reference/unlock-rows
+
+    def unlock_rows(body_params)
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/unlock-rows/")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Put.new(url)
+      request["Authorization"] = "Token #{access_token}"
+      request["Content-Type"] = "application/json"
+      request.body = JSON.dump(body_params)
+
+      response = https.request(request)
+      SeatableRuby.parse(response.read_body)
+    end
   end
 end

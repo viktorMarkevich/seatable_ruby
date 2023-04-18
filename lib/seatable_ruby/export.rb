@@ -78,7 +78,7 @@ module SeatableRuby
 
       response = http.request(request)
       # SeatableRuby.parse(response.read_body)
-      puts response.read_body
+      response.read_body
     end
   end
 end

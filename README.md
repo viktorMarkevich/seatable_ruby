@@ -23,9 +23,19 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
     SeatableRuby.config do |c|
         c.api_token = ENV['SEATABLE_API_TOKEN']
+        ....
+        c.account_token = ENV['SEATABLE_ACCOUNT_TOKEN'] # If you know your account_tocken. This has a higher priority than the lines below.
+          
+          OR/AND
+  
+        c.account_credentials = { # to get an account token
+          username: ENV['SEATABLE_USERNAME'],
+          password: ENV['SEATABLE_PASSWORD']
+        ....
+        }
     end    
     ```
-__NOTE:__ Put your api_token into `ENV['SEATABLE_API_TOKEN']`. You can do it by using the [dotenv-rails gem](https://github.com/bkeepers/dotenv) **OR** use `master.key` and `credentials.yml.enc` if you rails version is `5.0 +`.
+__NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by using the [dotenv-rails gem](https://github.com/bkeepers/dotenv) **OR** use `master.key` and `credentials.yml.enc` if you rails version is `5.0 +`.
 ### Endpoints
 #### Rows
 - List Rows:  

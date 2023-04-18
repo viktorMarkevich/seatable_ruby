@@ -6,17 +6,14 @@ module SeatableRuby
     attr_accessor :params, :dtable_uuid, :access_token
 
     def initialize(params = {})
+      client = Client.new
       @dtable_uuid = client.dtable_uuid
       @access_token = client.access_token
       @params = params
     end
 
-    def client
-      @client ||= Client.new
-    end
-
     # GET
-    # List Rows
+    # List Views
     def list_views
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/")
 
@@ -26,7 +23,7 @@ module SeatableRuby
 
       request = Net::HTTP::Get.new(url)
       request["accept"] = 'application/json'
-      request["Authorization"] = "Token #{access_token}"
+      request["Authorization"] = "Bearer #{access_token}"
 
       response = http.request(request)
       SeatableRuby.parse(response.read_body)
@@ -49,8 +46,20 @@ module SeatableRuby
 
     # GET
     # Get View
-    def get_view(query = {})
-      p 'The Get View does not ready yet'
+    def get_view
+      view_name = (params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+
+      url.query = URI.encode_www_form(params.except(:view_name))
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+
+      request = Net::HTTP::Get.new(url)
+      request["accept"] = 'application/json'
+      request["Authorization"] = "Bearer #{access_token}"
+
+      response = http.request(request)
+      SeatableRuby.parse(response.read_body)
     end
 
     # PUT

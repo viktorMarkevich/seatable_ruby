@@ -6,14 +6,10 @@ module SeatableRuby
     attr_accessor :dtable_uuid, :access_token
 
     def initialize
+      client = Client.new
       @dtable_uuid = client.dtable_uuid
       @access_token = client.access_token
     end
-
-    def client
-      @client ||= Client.new
-    end
-    
 
     def basic_infos
       url = URI("https://cloud.seatable.io/dtable-server/dtables/#{dtable_uuid}")

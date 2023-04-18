@@ -3,24 +3,20 @@ require "net/http"
 
 module SeatableRuby
   class Column
-    attr_accessor :params, :dtable_uuid, :access_token
+    attr_accessor :dtable_uuid, :access_token
 
-    def initialize(params = {})
+    def initialize
+      client = Client.new
       @dtable_uuid = client.dtable_uuid
       @access_token = client.access_token
-      @params = params
-    end
-
-    def client
-      @client ||= Client.new
     end
 
     # GET
     # List Columns in View in Table
     def list_columns_in_view_in_table(params)
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/columns")
-      # ?table_name=Table1&view_name=Default View")
-      url.query = URI.encode_www_form(params)
+
+      url.query = URI.encode_www_form(params) # For example: it returns "?table_name=Table1&view_name=Default View"
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
 

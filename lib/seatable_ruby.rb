@@ -13,7 +13,7 @@ module SeatableRuby
   class Error < StandardError; end
 
   class << self
-    attr_accessor :api_token, :account_credentials
+    attr_accessor :api_token, :account_credentials, :account_token
 
     def config
       yield self

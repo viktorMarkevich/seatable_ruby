@@ -6,10 +6,10 @@ module SeatableRuby
     attr_accessor :account_token
 
     def initialize
-      @account_token = account_token
+      @account_token = SeatableRuby.account_token || request_account_token
     end
 
-    def account_token
+    def request_account_token
       url = URI("https://cloud.seatable.io/api2/auth-token/")
 
       http = Net::HTTP.new(url.host, url.port)

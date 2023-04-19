@@ -37,6 +37,10 @@ If bundler is not being used to manage dependencies, install the gem by executin
     ```
 __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by using the [dotenv-rails gem](https://github.com/bkeepers/dotenv) **OR** use `master.key` and `credentials.yml.enc` if you rails version is `5.0 +`.
 ### Endpoints
+#### Account
+
+- Account token:
+  - Method - [GET]  
 #### Rows
 - List Rows:  
   - Method - [GET]

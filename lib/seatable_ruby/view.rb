@@ -81,17 +81,53 @@ module SeatableRuby
 
     # PUT
     # Update View
-    # for mor info -> https://api.seatable.io/reference/update-view
+    # required path_params is -> { view_name: '...' }
+    # required query_params is -> { table_name: '...' }
+    # body_params is -> { name: '...', is_locked: boolean, filters: [], filter_conjunction: '...',
+    #                                 sorts: [ { ...=> '---', ...}, {...} ],
+    #                                 groupbys: [ { ...=> '---', ...}, {...} ],
+    #                                 hidden_columns: [ 'IDs of the rows that should be hidden' ] }
     #
-    def update_view(query = {})
-      p 'The Update View does not ready yet'
+    # for mor info -> https://api.seatable.io/reference/update-view
+
+    def update_view(path_params, query_params, body_params)
+      view_name = (path_params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+
+      url.query = URI.encode_www_form(query_params)
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+
+      request = Net::HTTP::Put.new(url)
+      request["accept"] = 'application/json'
+      request["content-type"] = 'application/json'
+      request["Authorization"] = "Bearer #{access_token}"
+      request.body = JSON.dump(body_params)
+
+      response = http.request(request)
+      SeatableRuby.parse(response.read_body)
     end
 
     # DELETE
     # Delete View
+    # required path_params is -> { view_name: '...' }
+    # required query_params is -> { table_name: '...' }
+    #
     # for mor info -> https://api.seatable.io/reference/delete-view
-    def delete_view(query = {})
-      p 'The Delete View does not ready yet'
+    def delete_view(path_params, query_params)
+      view_name = (path_params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
+      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+
+      url.query = URI.encode_www_form(query_params)
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+
+      request = Net::HTTP::Delete.new(url)
+      request["accept"] = 'application/json'
+      request["Authorization"] = "Bearer #{access_token}"
+
+      response = http.request(request)
+      SeatableRuby.parse(response.read_body)
     end
   end
 end

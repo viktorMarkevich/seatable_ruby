@@ -9,7 +9,7 @@ module SeatableRuby
       client = Client.new
       @dtable_uuid = client.dtable_uuid
       @access_token = client.access_token
-      @account_token = Account.new.account_token
+      @account_token = Account.new.account_data['token']
     end
 
     # GET

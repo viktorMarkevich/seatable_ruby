@@ -18,7 +18,7 @@ module SeatableRuby
     # REQUIRED QUERY PARAMS => { dtable_name: 'base name' } # NOTE! - in the api they show us the 'base_name' for some reason,
     #                                           but work version is :dtable_name
     #
-    # the response example here https://api.seatable.io/reference/export-base
+    # for more info ->  https://api.seatable.io/reference/export-base
 
     def export_base(path_params, query_params)
       url = URI("https://cloud.seatable.io/api/v2.1/workspace/#{path_params[:workspace_id]}/synchronous-export/export-dtable/")

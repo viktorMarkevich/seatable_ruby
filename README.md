@@ -44,7 +44,7 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
 ### Endpoints
 #### Account: `SeatableRuby::Account.new`
 
-- Account token:
+- __Account token:__
   - Method - [POST]
   - There are 3 options to get account_token. If all of them defined, then gem will works in the next priorities:
     - [1]: pass seatable account credentials => `SeatableRuby::Account.new({ username: 'email address', password: 'passsword' }).account_token` => `token_string`
@@ -53,25 +53,25 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - More api info [here](https://api.seatable.io/reference/get-account-token)
 
 #### BasicInfo: `SeatableRuby::BasicInfo.new`
-- Get Base Info:
+- __Get Base Info:__
   - Method - [GET]
   - Instance method - `basic_info`
   - More api info [here](https://api.seatable.io/reference/get-base-info)
 
 
-- Get Metadata:
+- __Get Metadata:__
   - Method - [GET]
   - Instance method - `basic_metadata`
   - More api info [here](https://api.seatable.io/reference/get-metadata)
 
 
-- Get Big Data Status:
+- __Get Big Data Status:__
   - Method - [GET]
   - Instance method - `basic_big_data_status`
   - More api info [here](https://api.seatable.io/reference/get-big-data-status)
 
 #### Columns: `SeatableRuby::Column.new`
-- Get Big Data Status:
+- __Get Big Data Status:__
   - Method - [GET]
   - Instance method - `list_columns(query_params)`
     - Required `query_params` is `{ table_name: '...' }`
@@ -80,7 +80,7 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
 
 
 #### Export: `SeatableRuby::Export.new`
-- Export Base:
+- __Export Base:__
   - Method - [GET]
   - Instance method - `export_base(path_params, query_params)`
     - Required `path_params` is `{ workspace_id: '..' }`
@@ -88,7 +88,8 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - **NOTE:** in the api they show us the `:base_name` key for some reason, but work version is the `:dtable_name` key  
   - More api info [here](https://api.seatable.io/reference/export-base)
 
-- Export Table:
+
+- __Export Table:__
   - Method - [GET]
   - Instance method - `export_table(path_params, query_params)`
     - Required `path_params` is `{ workspace_id: '..' }`
@@ -96,7 +97,8 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - **NOTE:** in the api they show us the `:base_name` key for some reason, but work version is the `:dtable_name` key
   - More api info [here](https://api.seatable.io/reference/export-table)
 
-- Export View:
+
+- __Export View:__
   - Method - [GET]
   - Instance method - `export_view(path_params, query_params)`
     - Required `path_params` is `{ workspace_id: '..' }`
@@ -104,16 +106,16 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - **NOTE:** in the api they show us the `:base_name` key for some reason, but work version is the `:dtable_name` key
   - More api info [here](https://api.seatable.io/reference/export-view)
 
-
+  
 #### Rows: `SeatableRuby::Row.new`
-- List Rows(with SQL):
+- __List Rows(with SQL):__
   - Method - [POST]
   - Instance method - `list_rows_with_sql(body_params)` 
     - Required `body_params` are `{ sql: '...', convert_keys: boolean }`
   - More api info [here](https://api.seatable.io/reference/list-rows-with-sql)
   
 
-- List Rows:  
+- __List Rows:__  
   - Method - [GET]
   - Instance method - `list_rows(query_params)`
     - Required `query_params` is `{ table_name: '...' }`
@@ -122,14 +124,14 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - More api info [here](https://api.seatable.io/reference/list-rows)
   
   
-- Append Row:
+- __Append Row:__
   - Method - [POST]
   - Instance method - `append_row(body_params)`
     - Required `body_params` are `{ table_name: '...', row: { row data } }`
   - More api info [here](https://api.seatable.io/reference/add-row)
 
 
-- Insert Row:
+- __Insert Row:__
   - Method - [POST]
   - Instance method - `insert_row(body_params)`
     - Required `body_params` are `{ table_name: '...', row: { row data } }`
@@ -137,21 +139,21 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - More api info [here](https://api.seatable.io/reference/add-row)
 
 
-- Update Row:
+- __Update Row:__
   - Method - [PUT]
   - Instance method - `update_row(body_params)`
     - Required `body_params` are `{ table_name: '...', row_id: '...', row: { row data }] }`
   - More api info [here](https://api.seatable.io/reference/update-row)
 
 
-- Delete Row:
+- __Delete Row:__
   - Method - [DELETE]
   - Instance method - `delete_row(body_params)`
     - Required `body_params` are `{ table_name: '...', row_id: '...' }`
   - More api info [here](https://api.seatable.io/reference/delete-row)
 
 
-- Get Row:
+- __Get Row:__
   - Method - [GET]
   - Instance method - `get_row(path_params, query_params)`
     - Required `path_params` is `{ row_id: '...' }`
@@ -160,27 +162,27 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - More api info [here](https://api.seatable.io/reference/get-row)
   
 
-- Batch Append Rows:
+- __Batch Append Rows:__
   - Method - [POST]
   - Instance method - `append_rows(body_params)`
     - Required `body_params` are `{ table_name: '..', rows: [...] }`
   - More api info [here](https://api.seatable.io/reference/append-rows)
 
-- Batch Update Rows:
+- __Batch Update Rows:__
   - Method - [PUT]
   - Instance method - `update_rows(body_params)`
     - Required `body_params` are `{ table_name: '...', updates: [ row_id: '...', row: { "Name":"Max", "Age":"21" } ] }`
   - More api info [here](https://api.seatable.io/reference/update-rows)
   
 
-- Batch Delete Rows:
+- __Batch Delete Rows:__
   - Method - [DELETE]
   - Instance method - `delete_rows(body_params)`
     - Required `body_params` are `{ table_name: '...', row_ids: ['..', '..'] }`
   - More api info [here](https://api.seatable.io/reference/delete-rows)
   
 
-- Lock Rows:
+- __Lock Rows:__
   - Method - [PUT]
   - Instance method - `lock_rows(body_params)`
     - Required `body_params` are `{ table_name: '...', row_ids: [ '..', '..' ] }`
@@ -188,7 +190,7 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - More api info [here](https://api.seatable.io/reference/lock-rows)
 
 
-- Unlock Rows:
+- __Unlock Rows:__
   - Method - [PUT]
   - Instance method - `unlock_rows(body_params)`
     - Required `body_params` are `{ table_name: '...', row_ids: [ '..', '..' ] }`
@@ -196,14 +198,14 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
 
 
 #### Views: `SeatableRuby::View.new`
-- List Views:
+- __List Views:__
   - Method - [GET]
   - Instance method - `list_views(query_params)`
     - Required `query_params` is `{ table_name: '...' }`
   - More api info [here](https://api.seatable.io/reference/list-views)
 
 
-- Create View:
+- __Create View:__
   - Method - [POST]
   - Instance method - `create_view(query_params, body_params)`
     - Required `query_params` is `{ table_name: '...' }`
@@ -212,7 +214,7 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - More api info [here](https://api.seatable.io/reference/create-view)
   
 
-- Get View:
+- __Get View:__
   - Method - [GET]
   - Instance method - `get_view(path_params, query_params)`
     - Required `path_params` is `{ view_name: '...' }`

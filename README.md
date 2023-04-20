@@ -24,14 +24,19 @@ If bundler is not being used to manage dependencies, install the gem by executin
     SeatableRuby.config do |c|
         c.api_token = ENV['SEATABLE_API_TOKEN']
         ....
-        c.account_token = ENV['SEATABLE_ACCOUNT_TOKEN'] # If you know your account_tocken. This has a higher priority than the lines below.
+        c.account_token = ENV['SEATABLE_ACCOUNT_TOKEN'] # If you know your account_token.
           
           OR/AND
   
-        c.account_credentials = { # to get an account token
+        c.account_credentials = {                       # To get an account_token
           username: ENV['SEATABLE_USERNAME'],
           password: ENV['SEATABLE_PASSWORD']
         ....
+  
+        # If setup the account_credentials and account_token data,
+        # then gem will works with account_credentials only.
+        # More info about priorities in the `Account` section.  
+         
         }
     end    
     ```
@@ -41,7 +46,7 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
 
 - Account token:
   - Method - [POST]
-  - There are 3 options to get account_token(`[numbers]` it's the level of priority - that gem will works with `first|second|third`):
+  - There are 3 options to get account_token. If all of them defined, then gem will works in the next priorities:
     - [1]: pass seatable account credentials => `SeatableRuby::Account.new({ username: 'email address', password: 'passsword' }).account_token` => `token_string`
     - [2]: set seatable `account_credentials` into `/config/initializers/seatable.rb` (take a look Config section) => `SeatableRuby::Account.new.account_token` => `token_string` 
     - [3]: set seatable `account_token` into `/config/initializers/seatable.rb` (take a look Config section) => `SeatableRuby::Account.new.account_token` => `token_string`

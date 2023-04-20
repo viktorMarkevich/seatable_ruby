@@ -11,6 +11,8 @@ module SeatableRuby
       @access_token = client.access_token
     end
 
+    # GET
+    # Get Base Info
     # for more info -> https://api.seatable.io/reference/get-base-info
 
     def basic_info
@@ -24,6 +26,8 @@ module SeatableRuby
       return_response(https, request)
     end
 
+    # GET
+    # Get Metadata
     # for more info -> https://api.seatable.io/reference/get-metadata
 
     def basic_metadata
@@ -38,6 +42,8 @@ module SeatableRuby
       return_response(https, request)
     end
 
+    # GET
+    # Get Big Data Status
     # for more info -> https://api.seatable.io/reference/get-big-data-status
 
     def basic_big_data_status

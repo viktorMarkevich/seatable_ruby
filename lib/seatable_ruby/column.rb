@@ -12,13 +12,13 @@ module SeatableRuby
     end
 
     # GET
-    # List Columns in View in Table
+    # List Columns
     # required query params -> { table_name: '...' }
     # all query params -> { table_name: '...', view_name: '...' }
     #
     # for more info -> https://api.seatable.io/reference/list-columns
 
-    def list_columns_in_view_in_table(params)
+    def list_columns(query_params)
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/columns")
 
       url.query = URI.encode_www_form(params) # For example: it returns "?table_name=Table1&view_name=Default View"

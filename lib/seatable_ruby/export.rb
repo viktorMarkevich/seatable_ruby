@@ -9,14 +9,14 @@ module SeatableRuby
       client = Client.new
       @dtable_uuid = client.dtable_uuid
       @access_token = client.access_token
-      @account_token = Account.new.account_data['token']
+      @account_token = Account.new.account_token
     end
 
     # GET
     # Export Base
     # REQUIRED PATH PARAMS => { workspace_id: '..' }
-    # REQUIRED QUERY PARAMS => { dtable_name: 'base name' } # NOTE! - in the api they show us the 'base_name' for some reason,
-    #                                           but work version is :dtable_name
+    # REQUIRED QUERY PARAMS => { dtable_name: 'base name' }
+    # NOTE: in the api they show us the ':base_name' key for some reason, but work version is the ':dtable_name' key
     #
     # for more info ->  https://api.seatable.io/reference/export-base
 
@@ -28,9 +28,9 @@ module SeatableRuby
 
     # GET
     # Export Table
-    # REQUIRED PATH PARAMS => { workspace_id: '' }
-    # REQUIRED QUERY PARAMS => { table_id: 'fdf', table_name: '', dtable_name: '...']
-    # NOTE! - in the api they show us the 'base_name' for some reason, but work version is :dtable_name
+    # REQUIRED PATH PARAMS => { workspace_id: '..' }
+    # REQUIRED QUERY PARAMS => { table_id: 'xxxx', table_name: '', dtable_name: '...'] }
+    # NOTE: in the api they show us the ':base_name' key for some reason, but work version is the ':dtable_name' key
     #
     # for more info -> https://api.seatable.io/reference/export-table
 
@@ -43,15 +43,9 @@ module SeatableRuby
     # GET
     # Export View
     # REQUIRED PATH PARAMS => [:workspace_id]
-    # REQUIRED QUERY PARAMS => { table_id: "The id of the table. The id of a table is unique inside a base and is often used
-    #                                   to identify a table. Important: the table_id is not the table_name.",
-    #                            table_name: 'The name of the table.',
-    #                            dtable_name: 'name of your base',
-    #                            view_id: 'id of view, string',
-    #                            view_name: 'name of view, required, string.'}
-    #
-    # NOTE! - in the api they show us the 'base_name' for some reason,
-    #                                                       but work version is :dtable_name
+    # REQUIRED QUERY PARAMS => { table_id: "xxxx", table_name: '...', dtable_name: 'name of your base',
+    #                            view_id: '', view_name: 'name of view' }
+    # NOTE: in the api they show us the ':base_name' key for some reason, but work version is the ':dtable_name' key
     #
     # for more info -> https://api.seatable.io/reference/export-view
 

@@ -3,20 +3,20 @@ require "net/http"
 
 module SeatableRuby
   class Account
-    attr_accessor :account_data
+    attr_accessor :account_token
 
     def initialize(form_data = {})
-      @account_data = choose_priority(form_data)
+      @account_token = choose_priority(form_data)
     end
 
     private
 
     def choose_priority(form_data)
-      return request_account_token(form_data) if form_data.present?
+      return request_account_token(form_data)['token'] if form_data.present?
 
-      return request_account_token(SeatableRuby.account_credentials) if SeatableRuby.account_credentials.present?
+      return request_account_token(SeatableRuby.account_credentials)['token'] if SeatableRuby.account_credentials.present?
 
-      return { 'token' => SeatableRuby.account_token } if SeatableRuby.account_token.present?
+      return SeatableRuby.account_token if SeatableRuby.account_token.present?
 
       request_account_token({}) # to return an error message
     end
@@ -27,12 +27,12 @@ module SeatableRuby
     #
     # 1. SeatableRuby::Account.new({ username: 'email address', password: 'passsword' }) =>
     #
-    # => < SeatableRuby::Account:###### @account_data={ 'token' => 'tokenString' } >
+    # => < SeatableRuby::Account:###### @account_token='tokenString' >
     #
     # ******************************************************************************************************************
     # 2. SeatableRuby::Account.new =>
     #
-    # => < SeatableRuby::Account:###### @account_data={ 'token' => 'tokenString' } >
+    # => < SeatableRuby::Account:###### @account_token='tokenString' >
     #
     # by using seatable an account credentials DEFINED IN RAILS APP as config hash data:
     #
@@ -45,7 +45,7 @@ module SeatableRuby
     #
     # 2. SeatableRuby::Account.new =>
     #
-    # => < SeatableRuby::Account:###### @account_data={ 'token' => 'tokenString' } >
+    # => < SeatableRuby::Account:###### @account_token='tokenString' >
     #
     # by using seatable account_token that was DEFINED IN RAILS APP as the `c.account_token= ENV['SEATABLE_ACCOUNT_TOKEN']`
     # it used IF the c.account_credentials = { } was not defined at all

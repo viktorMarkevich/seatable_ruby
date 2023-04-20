@@ -39,6 +39,7 @@ module SeatableRuby
     # ALL body_params is -> { name: '..', type: table|archive, is_locked: true|false }
     #
     # for mor info -> https://api.seatable.io/reference/create-view
+
     def create_view(query_params, body_params)
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/")
 

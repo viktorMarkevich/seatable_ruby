@@ -14,6 +14,7 @@ module SeatableRuby
     # POST
     # List Rows(with SQL)
     # required body_params are -> { sql: '...', convert_keys: true|false }
+    #
     # for more info -> https://api.seatable.io/reference/list-rows-with-sql
 
     def list_rows_with_sql(body_params)
@@ -120,7 +121,7 @@ module SeatableRuby
     # Delete Row
     # required body_params are -> { table_name: '...', row_id: '...' }
     # for more info -> https://api.seatable.io/reference/delete-row
-    def delete_row(row_data)
+    def delete_row(body_params)
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
@@ -130,14 +131,14 @@ module SeatableRuby
       request["Authorization"] = "Token #{access_token}"
       request["Accept"] = "application/json"
       request["Content-type"] = "application/json"
-      request.body = JSON.dump(row_data)
+      request.body = JSON.dump(body_params)
 
       response = https.request(request)
       SeatableRuby.parse(response.read_body)
     end
 
     # GET
-    # Get Row's Details with Row ID
+    # Get Row
     # required path_params is -> { row_id: '...' }
     # required query_params is -> { table_name: '...' }
     # all query_params are -> { table_name: '...', convert: true|false }
@@ -158,8 +159,8 @@ module SeatableRuby
     end
 
     # POST
-    # Append Rows
-    # required body_params are -> { table_name: '..', rows: [...]  }
+    # Batch Append Rows
+    # required body_params are -> { table_name: '..', rows: [...] }
     # for more info -> https://api.seatable.io/reference/append-rows
 
     def append_rows(body_params)
@@ -178,7 +179,7 @@ module SeatableRuby
     end
 
     # PUT
-    # Update Rows
+    # Batch Update Rows
     # required body_params are -> { table_name: '...', updates: [ row_id: '...', row: { "Name":"Max", "Age":"21" } ] }
     # for more info -> https://api.seatable.io/reference/update-rows
 
@@ -199,7 +200,7 @@ module SeatableRuby
     end
 
     # DELETE
-    # Delete Rows
+    # Batch Delete Rows
     # required body_params are -> { table_name: '...', row_ids: ['..', '..'] }
     # for more info -> https://api.seatable.io/reference/delete-rows
 

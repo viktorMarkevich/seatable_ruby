@@ -41,10 +41,10 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
 
 - Account token:
   - Method - [POST]
-  - There are 3 options to get account_token:
-    - [1] - higher priority: pass seatable account credentials => `SeatableRuby::Account.new({ username: 'email address', password: 'passsword' }).account_token` => `token_string`
-    - [2] - middle priority: set seatable `account_credentials` into `/config/initializers/seatable.rb` (take a look Config section) => `SeatableRuby::Account.new.account_token` => `token_string` 
-    - [3] - low priority: set seatable `account_token` into `/config/initializers/seatable.rb` (take a look Config section) => `SeatableRuby::Account.new.account_token` => `token_string`
+  - There are 3 options to get account_token(`[numbers]` it's the level of priority - that gem will works with `first|second|third`):
+    - [1]: pass seatable account credentials => `SeatableRuby::Account.new({ username: 'email address', password: 'passsword' }).account_token` => `token_string`
+    - [2]: set seatable `account_credentials` into `/config/initializers/seatable.rb` (take a look Config section) => `SeatableRuby::Account.new.account_token` => `token_string` 
+    - [3]: set seatable `account_token` into `/config/initializers/seatable.rb` (take a look Config section) => `SeatableRuby::Account.new.account_token` => `token_string`
   - More api info [here](https://api.seatable.io/reference/get-account-token)
 
 #### BasicInfo: `SeatableRuby::BasicInfo.new`

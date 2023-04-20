@@ -11,7 +11,11 @@ module SeatableRuby
       @access_token = client.access_token
     end
 
-    def basic_infos
+    # GET
+    # Get Base Info
+    # for more info -> https://api.seatable.io/reference/get-base-info
+
+    def basic_info
       url = URI("https://cloud.seatable.io/dtable-server/dtables/#{dtable_uuid}")
 
       https = Net::HTTP.new(url.host, url.port)
@@ -21,6 +25,10 @@ module SeatableRuby
 
       return_response(https, request)
     end
+
+    # GET
+    # Get Metadata
+    # for more info -> https://api.seatable.io/reference/get-metadata
 
     def basic_metadata
       url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/metadata/")
@@ -33,6 +41,10 @@ module SeatableRuby
 
       return_response(https, request)
     end
+
+    # GET
+    # Get Big Data Status
+    # for more info -> https://api.seatable.io/reference/get-big-data-status
 
     def basic_big_data_status
       url = URI("https://cloud.seatable.io/dtable-db/api/v1/base-info/#{dtable_uuid}/")

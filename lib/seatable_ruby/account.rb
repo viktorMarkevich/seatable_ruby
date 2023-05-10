@@ -15,11 +15,16 @@ module SeatableRuby
     def choose_priority(form_data)
       return request_account_token(form_data) if form_data.present?
 
-      return request_account_token(SeatableRuby.account_credentials) if SeatableRuby.account_credentials.present?
+      return request_account_token(SeatableRuby.account_credentials) if are_account_credentials?
 
       return { 'token' => SeatableRuby.account_token } if SeatableRuby.account_token.present?
 
       request_account_token({}) # to return an error message
+    end
+
+    def are_account_credentials?
+      credentials = SeatableRuby.account_credentials
+      credentials.present? && credentials[:username].present? && credentials[:password].present?
     end
 
     # POST

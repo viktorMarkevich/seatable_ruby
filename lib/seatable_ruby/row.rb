@@ -152,7 +152,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/lock-rows
 
     def lock_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/lock-rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/lock-rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -173,7 +173,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/unlock-rows
 
     def unlock_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/unlock-rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/unlock-rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true

@@ -112,7 +112,7 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - Method - [POST]
   - Instance method - `list_rows_with_sql(body_params)` 
     - Required `body_params` are `{ sql: '...', convert_keys: boolean }`
-  - More api info [here](https://api.seatable.io/reference/list-rows-with-sql)
+  - More api info [here](https://seatable.readme.io/reference/querysql)
   
 
 - __List Rows:__  
@@ -121,28 +121,21 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
     - Required `query_params` is `{ table_name: '...' }`
     - All `query_params` are `{ table_name: '...', view_name: '...', convert_link_id: '...', order_by: '...', direction: '...', start: '...', limit: '...' }`
   - **NOTE:** The response returns only up to 1.000 rows, even if limit is set to more than 1.000. This request can not return rows from the big data backend. User the request List Rows (with SQL) instead.
-  - More api info [here](https://api.seatable.io/reference/list-rows)
+  - More api info [here](https://seatable.readme.io/reference/listrows)
   
   
-- __Append Row:__
+- __Append Row(s):__
   - Method - [POST]
-  - Instance method - `append_row(body_params)`
-    - Required `body_params` are `{ table_name: '...', row: { row data } }`
-  - More api info [here](https://api.seatable.io/reference/add-row)
+  - Instance method - `append_rows(body_params)`
+    - Required `body_params` are `{ table_name: '...', rows: [{ row data }, {}, ...]`
+  - More api info [here](https://seatable.readme.io/reference/appendrows)
 
 
-- __Update Row:__
+- __Update Row(s):__
   - Method - [PUT]
-  - Instance method - `update_row(body_params)`
-    - Required `body_params` are `{ table_name: '...', row_id: '...', row: { row data }] }`
-  - More api info [here](https://api.seatable.io/reference/update-row)
-
-
-- __Delete Row:__
-  - Method - [DELETE]
-  - Instance method - `delete_row(body_params)`
-    - Required `body_params` are `{ table_name: '...', row_id: '...' }`
-  - More api info [here](https://api.seatable.io/reference/delete-row)
+  - Instance method - `update_rows(body_params)`
+    - Required `body_params` are `{ table_name: '...', updates: [ row_id: '...', row: { "Name":"Max", "Age":"21" } ] }`
+  - More api info [here](ttps://seatable.readme.io/reference/updaterow)
 
 
 - __Get Row:__
@@ -151,27 +144,16 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
     - Required `path_params` is `{ row_id: '...' }`
     - Required `query_params` is `{ table_name: '...' }`
     - All `query_params` are `{ table_name: '...', convert: boolean }`
-  - More api info [here](https://api.seatable.io/reference/get-row)
-  
+  - More api info [here](https://seatable.readme.io/reference/getrow)
 
-- __Batch Append Rows:__
-  - Method - [POST]
-  - Instance method - `append_rows(body_params)`
-    - Required `body_params` are `{ table_name: '..', rows: [...] }`
-  - More api info [here](https://api.seatable.io/reference/append-rows)
 
-- __Batch Update Rows:__
-  - Method - [PUT]
-  - Instance method - `update_rows(body_params)`
-    - Required `body_params` are `{ table_name: '...', updates: [ row_id: '...', row: { "Name":"Max", "Age":"21" } ] }`
-  - More api info [here](https://api.seatable.io/reference/update-rows)
-  
-
-- __Batch Delete Rows:__
+- __Delete Row(s):__
   - Method - [DELETE]
   - Instance method - `delete_rows(body_params)`
     - Required `body_params` are `{ table_name: '...', row_ids: ['..', '..'] }`
-  - More api info [here](https://api.seatable.io/reference/delete-rows)
+  - More api info [here](https://seatable.readme.io/reference/deleterow)
+  - FYI: !!! the api doc has an error. There is `row_id` as required attr
+    but after double checking there is only `row_ids` working
   
 
 - __Lock Rows:__
@@ -179,14 +161,14 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - Instance method - `lock_rows(body_params)`
     - Required `body_params` are `{ table_name: '...', row_ids: [ '..', '..' ] }`
     - **NOTE:** Lock rows is an advanced feature in SeaTable and only available for `enterprise` subscriptions.
-  - More api info [here](https://api.seatable.io/reference/lock-rows)
+  - More api info [here](https://seatable.readme.io/reference/lockrows)
 
 
 - __Unlock Rows:__
   - Method - [PUT]
   - Instance method - `unlock_rows(body_params)`
     - Required `body_params` are `{ table_name: '...', row_ids: [ '..', '..' ] }`
-  - More api info [here](https://api.seatable.io/reference/unlock-rows)
+  - More api info [here](https://seatable.readme.io/reference/unlockrows)
 
 
 #### Views: `SeatableRuby::View.new`

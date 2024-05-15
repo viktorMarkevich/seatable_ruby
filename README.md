@@ -131,14 +131,6 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - More api info [here](https://api.seatable.io/reference/add-row)
 
 
-- __Insert Row:__
-  - Method - [POST]
-  - Instance method - `insert_row(body_params)`
-    - Required `body_params` are `{ table_name: '...', row: { row data } }`
-    - All params: `body_params` are `{ table_name: '...', anchor_row_id: '...', row_insert_position: '...', row: { row data } }`
-  - More api info [here](https://api.seatable.io/reference/add-row)
-
-
 - __Update Row:__
   - Method - [PUT]
   - Instance method - `update_row(body_params)`

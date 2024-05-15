@@ -18,12 +18,14 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/list-rows-with-sql
 
     def list_rows_with_sql(body_params)
-      url = URI("https://cloud.seatable.io/dtable-db/api/v1/query/#{dtable_uuid}/")
+      # url = URI("https://cloud.seatable.io/dtable-db/api/v1/query/#{dtable_uuid}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/sql")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
 
       request = Net::HTTP::Post.new(url)
+      request["accept"] = 'application/json'
       request["Authorization"] = "Token #{access_token}"
       request["Content-Type"] = "application/json"
       request.body = JSON.dump(body_params)
@@ -49,6 +51,7 @@ module SeatableRuby
       https.use_ssl = true
 
       request = Net::HTTP::Get.new(url)
+      request["accept"] = 'application/json'
       request["Authorization"] = "Token #{access_token}"
 
       response = https.request(request)
@@ -60,13 +63,15 @@ module SeatableRuby
     # required body_params are -> { table_name: '...', row: { row data } }
     # for more info -> https://api.seatable.io/reference/add-row
 
-    def append_row(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
+    def append_rows(body_params) # TODO: change the name by adding s in the end og the method
+      # url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
 
       request = Net::HTTP::Post.new(url)
+      request["accept"] = 'application/json'
       request["Authorization"] = "Token #{access_token}"
       request["Content-Type"] = "application/json"
       request.body = JSON.dump(body_params)
@@ -75,59 +80,18 @@ module SeatableRuby
       SeatableRuby.parse(response.read_body)
     end
 
-    # POST
-    # Insert Row
-    # required body_params are -> { table_name: '...', row: { row data } }
-    # all body_params are -> { table_name: '...', anchor_row_id: '...', row_insert_position: '...', row: { row data } }
-    # for more info -> https://api.seatable.io/reference/add-row
-
-    def insert_row(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
-
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
-
-      request = Net::HTTP::Post.new(url)
-      request["Authorization"] = "Token #{access_token}"
-      request["Accept"] = "application/json"
-      request["Content-type"] = "application/json"
-      request.body = JSON.dump(body_params)
-
-      response = https.request(request)
-      SeatableRuby.parse(response.read_body)
-    end
-
     # PUT
-    # Update Row
-    # required body_params are -> { table_name: '...', row_id: '...', row: { row data }]
-    # for more info -> https://api.seatable.io/reference/update-row
-    def update_row(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
+    # Update Row(s)
+    # required body_params are -> { table_name: '...', updates: [ row_id: '...', row: { "Name":"Max", "Age":"21" } ] }
+
+    def update_rows(body_params) # TODO: change the name by adding s in the end og the method
+      # url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
 
       request = Net::HTTP::Put.new(url)
-      request["Authorization"] = "Token #{access_token}"
-      request["Accept"] = "application/json"
-      request["Content-type"] = "application/json"
-      request.body = JSON.dump(body_params)
-
-      response = https.request(request)
-      SeatableRuby.parse(response.read_body)
-    end
-
-    # DELETE
-    # Delete Row
-    # required body_params are -> { table_name: '...', row_id: '...' }
-    # for more info -> https://api.seatable.io/reference/delete-row
-    def delete_row(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
-
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
-
-      request = Net::HTTP::Delete.new(url)
       request["Authorization"] = "Token #{access_token}"
       request["Accept"] = "application/json"
       request["Content-type"] = "application/json"
@@ -152,48 +116,8 @@ module SeatableRuby
       https.use_ssl = true
 
       request = Net::HTTP::Get.new(url)
+      request["accept"] = 'application/json'
       request["Authorization"] = "Token #{access_token}"
-
-      response = https.request(request)
-      SeatableRuby.parse(response.read_body)
-    end
-
-    # POST
-    # Batch Append Rows
-    # required body_params are -> { table_name: '..', rows: [...] }
-    # for more info -> https://api.seatable.io/reference/append-rows
-
-    def append_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-append-rows/")
-
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
-
-      request = Net::HTTP::Post.new(url)
-      request["Authorization"] = "Token #{access_token}"
-      request["Content-Type"] = "application/json"
-      request.body = JSON.dump(body_params)
-
-      response = https.request(request)
-      SeatableRuby.parse(response.read_body)
-    end
-
-    # PUT
-    # Batch Update Rows
-    # required body_params are -> { table_name: '...', updates: [ row_id: '...', row: { "Name":"Max", "Age":"21" } ] }
-    # for more info -> https://api.seatable.io/reference/update-rows
-
-    def update_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-update-rows/")
-
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
-
-      request = Net::HTTP::Put.new(url)
-      request["Authorization"] = "Token #{access_token}"
-      request["Accept"] = "application/json"
-      request["Content-Type"] = "application/json"
-      request.body = JSON.dump(body_params)
 
       response = https.request(request)
       SeatableRuby.parse(response.read_body)
@@ -205,7 +129,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/delete-rows
 
     def delete_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-delete-rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true

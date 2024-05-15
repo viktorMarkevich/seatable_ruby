@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary = "SeaTable client."
   spec.description = "This gem will help you interact with the SeaTable API."
   spec.homepage = "https://github.com/viktorMarkevich/seatable_ruby"
-  spec.required_ruby_version = ">= 2.4.0"
+  spec.required_ruby_version = ">= 2.6.10"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/viktorMarkevich/seatable_ruby"

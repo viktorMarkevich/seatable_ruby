@@ -42,7 +42,7 @@ module SeatableRuby
     # This request can not return rows from the big data backend. User the request List Rows (with SQL) instead.
 
     def list_rows(query_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
       url.query = URI.encode_www_form(query_params)
 
       https = Net::HTTP.new(url.host, url.port)
@@ -145,7 +145,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/get-row
 
     def get_row(path_params, query_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/#{path_params[:row_id]}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/#{path_params[:row_id]}/")
       url.query = URI.encode_www_form(query_params)
 
       https = Net::HTTP.new(url.host, url.port)

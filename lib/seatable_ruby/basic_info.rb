@@ -13,56 +13,58 @@ module SeatableRuby
 
     # GET
     # Get Base Info
-    # for more info -> https://api.seatable.io/reference/get-base-info
+    # for more info -> https://seatable.readme.io/reference/getbaseinfo
 
     def basic_info
-      url = URI("https://cloud.seatable.io/dtable-server/dtables/#{dtable_uuid}")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}")
 
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
 
       request = Net::HTTP::Get.new(url)
+      request["accept"] = 'application/json'
 
-      return_response(https, request)
+      return_response(http, request)
     end
 
     # GET
     # Get Metadata
-    # for more info -> https://api.seatable.io/reference/get-metadata
+    # for more info -> https://seatable.readme.io/reference/getmetadata
 
     def basic_metadata
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/metadata/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/metadata/")
 
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
 
       request = Net::HTTP::Get.new(url)
       request["Accept"] = "application/json; charset=utf-8; indent=4"
 
-      return_response(https, request)
+      return_response(http, request)
     end
 
     # GET
-    # Get Big Data Status
-    # for more info -> https://api.seatable.io/reference/get-big-data-status
+    # List Collaborators
+    # for more info -> https://seatable.readme.io/reference/listcollaborators
 
-    def basic_big_data_status
-      url = URI("https://cloud.seatable.io/dtable-db/api/v1/base-info/#{dtable_uuid}/")
+    def list_collaborators
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/related-users/")
 
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
 
       request = Net::HTTP::Get.new(url)
+      request["accept"] = 'application/json'
 
-      return_response(https, request)
+      return_response(http, request)
     end
 
     private
 
-    def return_response(https, request)
+    def return_response(http, request)
       request["Authorization"] = "Token #{access_token}"
 
-      response = https.request(request)
+      response = http.request(request)
       SeatableRuby.parse(response.read_body)
     end
   end

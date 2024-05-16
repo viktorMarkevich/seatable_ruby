@@ -56,19 +56,27 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
 - __Get Base Info:__
   - Method - [GET]
   - Instance method - `basic_info`
-  - More api info [here](https://api.seatable.io/reference/get-base-info)
+  - More api info [here](https://seatable.readme.io/reference/getbaseinfo)
 
 
 - __Get Metadata:__
   - Method - [GET]
   - Instance method - `basic_metadata`
-  - More api info [here](https://api.seatable.io/reference/get-metadata)
+  - More api info [here](https://seatable.readme.io/reference/getmetadata)
 
 
+- __Get Metadata:__
+  - Method - [GET]
+  - Instance method - `list_collaborators`
+  - More api info [here](https://seatable.readme.io/reference/listcollaborators)
+  
+
+#### Big Data: `SeatableRuby::BigData.new`  [DEPRECATED]
 - __Get Big Data Status:__
   - Method - [GET]
-  - Instance method - `basic_big_data_status`
-  - More api info [here](https://api.seatable.io/reference/get-big-data-status)
+  - Instance method - `get_big_data_status`
+  - More api info [here](https://seatable.readme.io/reference/getbigdatastatusdeprecated)
+
 
 #### Columns: `SeatableRuby::Column.new`
 - __Get Big Data Status:__

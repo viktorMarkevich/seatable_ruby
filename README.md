@@ -184,7 +184,7 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - Method - [GET]
   - Instance method - `list_views(query_params)`
     - Required `query_params` is `{ table_name: '...' }`
-  - More api info [here](https://api.seatable.io/reference/list-views)
+  - More api info [here](https://seatable.readme.io/reference/listviews)
 
 
 - __Create View:__
@@ -193,7 +193,7 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
     - Required `query_params` is `{ table_name: '...' }`
     - Required `body_params` are `{ name: '...', type: 'table|archive' }`
     - All `body_params` are `{ name: '...', type: 'table|archive', is_locked: boolean }`
-  - More api info [here](https://api.seatable.io/reference/create-view)
+  - More api info [here](https://seatable.readme.io/reference/createview)
   
 
 - __Get View:__
@@ -201,7 +201,26 @@ __NOTE:__ Put your seatable data into `ENV['SEATABLE_...']`. You can do it by us
   - Instance method - `get_view(path_params, query_params)`
     - Required `path_params` is `{ view_name: '...' }`
     - Required `query_params` is `{ table_name: '...' }`
-  - More api info [here](https://api.seatable.io/reference/get-view)
+  - More api info [here](https://seatable.readme.io/reference/getview)
+
+
+- __Update View:__
+  - Method - [PUT]
+  - Instance method - `update_view(path_params, query_params)`
+    - Required `path_params` is `{ view_name: '...' }`
+    - Required `query_params` is `{ table_name: '...' }`
+    - body_params is -> { name: '...', is_locked: boolean, filters: [], filter_conjunction: '...',
+                                     sorts: [ { ...=> '---', ...}, {...} ],
+                                     groupbys: [ { ...=> '---', ...}, {...} ],
+                                     hidden_columns: [ 'IDs of the rows that should be hidden' ] }
+  - More api info [here](https://seatable.readme.io/reference/updateview)
+
+- __Delete View:__
+  - Method - [DELETE]
+  - Instance method - `delete_view(path_params, query_params)`
+    - Required `path_params` is `{ view_name: '...' }`
+    - Required `query_params` is `{ table_name: '...' }`
+  - More api info [here](https://seatable.readme.io/reference/deleteview)
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

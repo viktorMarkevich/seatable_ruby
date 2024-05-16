@@ -15,10 +15,10 @@ module SeatableRuby
     # List Views
     # required query_params is -> { table_name: '...' }
     #
-    # for mor info -> https://api.seatable.io/reference/list-views
+    # for mor info -> https://seatable.readme.io/reference/listviews
 
     def list_views(query_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)
@@ -38,10 +38,10 @@ module SeatableRuby
     # required body_params is -> { name: '..', type: table|archive }
     # ALL body_params is -> { name: '..', type: table|archive, is_locked: true|false }
     #
-    # for mor info -> https://api.seatable.io/reference/create-view
+    # for mor info -> https://seatable.readme.io/reference/createview
 
     def create_view(query_params, body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)
@@ -62,11 +62,11 @@ module SeatableRuby
     # required path_params is -> { view_name: '...' }
     # required query_params is -> { table_name: '...' }
     #
-    # for mor info -> https://api.seatable.io/reference/get-view
+    # for mor info -> https://seatable.readme.io/reference/getview
 
     def get_view(path_params, query_params)
       view_name = (path_params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/#{view_name}/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)
@@ -89,11 +89,11 @@ module SeatableRuby
     #                                 groupbys: [ { ...=> '---', ...}, {...} ],
     #                                 hidden_columns: [ 'IDs of the rows that should be hidden' ] }
     #
-    # for mor info -> https://api.seatable.io/reference/update-view
+    # for mor info -> https://seatable.readme.io/reference/updateview
 
     def update_view(path_params, query_params, body_params)
       view_name = (path_params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/#{view_name}/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)
@@ -114,10 +114,10 @@ module SeatableRuby
     # required path_params is -> { view_name: '...' }
     # required query_params is -> { table_name: '...' }
     #
-    # for mor info -> https://api.seatable.io/reference/delete-view
+    # for mor info -> https://seatable.readme.io/reference/deleteview
     def delete_view(path_params, query_params)
       view_name = (path_params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/#{view_name}/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)

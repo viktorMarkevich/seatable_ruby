@@ -16,7 +16,9 @@ module SeatableRuby
       @access_data ||= access_object
     end
 
-    # for more info -> https://api.seatable.io/reference/get-base-token-with-api-token
+    # GET
+    # Get Base-Token with API-Token
+    # for more info -> https://api.seatable.io/reference/getbasetokenwithapitoken
 
     def access_object
       url = URI("https://cloud.seatable.io/api/v2.1/dtable/app-access-token/")

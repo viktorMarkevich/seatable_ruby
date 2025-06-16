@@ -18,7 +18,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/list-rows-with-sql
 
     def list_rows_with_sql(body_params)
-      url = URI("https://cloud.seatable.io/dtable-db/api/v1/query/#{dtable_uuid}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/sql")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -61,7 +61,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/add-row
 
     def append_row(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -82,7 +82,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/add-row
 
     def insert_row(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -102,7 +102,7 @@ module SeatableRuby
     # required body_params are -> { table_name: '...', row_id: '...', row: { row data }]
     # for more info -> https://api.seatable.io/reference/update-row
     def update_row(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -122,7 +122,7 @@ module SeatableRuby
     # required body_params are -> { table_name: '...', row_id: '...' }
     # for more info -> https://api.seatable.io/reference/delete-row
     def delete_row(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -164,7 +164,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/append-rows
 
     def append_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-append-rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -184,7 +184,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/update-rows
 
     def update_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-update-rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -205,7 +205,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/delete-rows
 
     def delete_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/batch-delete-rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -228,7 +228,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/lock-rows
 
     def lock_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/lock-rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/lock-rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -249,7 +249,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/unlock-rows
 
     def unlock_rows(body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/unlock-rows/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/unlock-rows/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true

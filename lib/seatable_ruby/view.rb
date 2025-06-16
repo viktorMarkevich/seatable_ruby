@@ -18,7 +18,7 @@ module SeatableRuby
     # for mor info -> https://api.seatable.io/reference/list-views
 
     def list_views(query_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)
@@ -41,7 +41,7 @@ module SeatableRuby
     # for mor info -> https://api.seatable.io/reference/create-view
 
     def create_view(query_params, body_params)
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)
@@ -66,7 +66,7 @@ module SeatableRuby
 
     def get_view(path_params, query_params)
       view_name = (path_params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/#{view_name}/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)
@@ -93,7 +93,7 @@ module SeatableRuby
 
     def update_view(path_params, query_params, body_params)
       view_name = (path_params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/#{view_name}/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)
@@ -117,7 +117,7 @@ module SeatableRuby
     # for mor info -> https://api.seatable.io/reference/delete-view
     def delete_view(path_params, query_params)
       view_name = (path_params[:view_name] || 'Default View').gsub(/[\s*]/, '%20')
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/views/#{view_name}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}/views/#{view_name}/")
 
       url.query = URI.encode_www_form(query_params)
       http = Net::HTTP.new(url.host, url.port)

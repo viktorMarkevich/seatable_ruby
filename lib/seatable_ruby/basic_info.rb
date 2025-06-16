@@ -16,7 +16,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/get-base-info
 
     def basic_info
-      url = URI("https://cloud.seatable.io/dtable-server/dtables/#{dtable_uuid}")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/#{dtable_uuid}")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -31,7 +31,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/get-metadata
 
     def basic_metadata
-      url = URI("https://cloud.seatable.io/dtable-server/api/v1/dtables/#{dtable_uuid}/metadata/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/dtables/#{dtable_uuid}/metadata/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -47,7 +47,7 @@ module SeatableRuby
     # for more info -> https://api.seatable.io/reference/get-big-data-status
 
     def basic_big_data_status
-      url = URI("https://cloud.seatable.io/dtable-db/api/v1/base-info/#{dtable_uuid}/")
+      url = URI("https://cloud.seatable.io/api-gateway/api/v2/dtables/base-info/#{dtable_uuid}/")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true

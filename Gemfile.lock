@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    seatable_ruby (0.1.6)
+    seatable_ruby (0.1.12)
 
 GEM
   remote: https://rubygems.org/
@@ -16,4 +16,4 @@ DEPENDENCIES
   seatable_ruby!
 
 BUNDLED WITH
-   2.3.26
+   2.6.2
